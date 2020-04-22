@@ -2,9 +2,6 @@ import java.util.Scanner;
 
 public class TicTacToe {
 
-    // TODO
-    // Input validation
-
     private Cells[][] board;
     private boolean gameOver;
     private Cells player1;
@@ -19,7 +16,6 @@ public class TicTacToe {
                 // board[0][0] , board[0][1] , board[0][2]
                 // board[1][0] , board[1][1] , board[1][2]
                 // board[2][0] , board[2][1] , board[2][2]
-
                 {Cells.EMPTY, Cells.EMPTY, Cells.EMPTY},
                 {Cells.EMPTY, Cells.EMPTY, Cells.EMPTY},
                 {Cells.EMPTY, Cells.EMPTY, Cells.EMPTY},
@@ -35,12 +31,11 @@ public class TicTacToe {
     }
 
     public void play() {
-
         Cells currentPlayer;
         int playerCheck = 0;
         while(!gameOver) {
             drawBoard();
-            if(!(whichPlayer(playerCheck))){
+            if(!(whichPlayer(playerCheck))) {
                 currentPlayer = player2;
             } else {
                 currentPlayer = player1;
@@ -61,11 +56,11 @@ public class TicTacToe {
 
             System.out.print(player+" pick a row: ");
             Scanner rowIn = new Scanner(System.in);
-            int row = rowIn.nextInt();
+            int row = inputValidator(rowIn);
 
             System.out.print(player+" pick a column: ");
             Scanner columnIn = new Scanner(System.in);
-            int column = columnIn.nextInt();
+            int column = inputValidator(columnIn);
 
             if (board[row][column].equals(Cells.EMPTY)) {
                 board[row][column] = player;
@@ -77,15 +72,20 @@ public class TicTacToe {
     }
 
     public boolean whichPlayer(int playerCheck) {
-        if ( (playerCheck % 2) == 0 ) {
-            return true;
-        } else {
-            return false;
-        }
+        return ((playerCheck % 2) == 0);
     }
 
-    public boolean inputValidator() {
-        return true;
+    public int inputValidator(Scanner input) {
+        int number;
+        do {
+            System.out.println("Range (0-2)");
+            while (!input.hasNextInt()) {
+                System.out.println("Invalid input. Must input integer from 0-2.");
+                input.next(); // get next input
+            }
+            number = input.nextInt();
+        } while (number < 0 || number > 2);
+        return number;
     }
 
     public boolean allMatch(Cells cell1, Cells cell2, Cells cell3) {
@@ -140,7 +140,5 @@ public class TicTacToe {
         System.out.println("     -----------------------");
         System.out.println("Row 2|  "+board[2][0]+" | "+board[2][1]+" | "+board[2][2]);
         System.out.println("\n===============================");
-
     }
-
 }
