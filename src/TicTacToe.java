@@ -4,10 +4,11 @@ public class TicTacToe {
 
     // TODO
     // Input validation
-    // Correct timing of checkWin
 
     private Cells[][] board;
     private boolean gameOver;
+    private Cells player1;
+    private Cells player2;
 
     private enum Cells {
         X, O, EMPTY;
@@ -24,37 +25,45 @@ public class TicTacToe {
                 {Cells.EMPTY, Cells.EMPTY, Cells.EMPTY},
             };
         gameOver = false;
-        System.out.println("Player1 = X");
-        System.out.println("Player2 = O\n");
-        Cells player1 = Cells.X;
-        Cells player2 = Cells.O;
-        play(player1, player2);
+        player1 = Cells.X;
+        player2 = Cells.O;
+        play();
     }
 
     public static void main(String[] args) {
         new TicTacToe();
     }
 
-    public void play(Cells player1, Cells player2) {
-        while (!(gameOver)) {
-            playerMove(player1);
-            playerMove(player2);
+    public void play() {
+
+        Cells currentPlayer;
+        int playerCheck = 0;
+        while(!gameOver) {
+            drawBoard();
+            if(!(whichPlayer(playerCheck))){
+                currentPlayer = player2;
+            } else {
+                currentPlayer = player1;
+            }
+            playerMove(currentPlayer);
+            playerCheck++;
+            if(checkWin()) {
+                drawBoard();
+                System.out.println("\n~~~~ Congratulations! "+currentPlayer+" WINS! ~~~~\n");
+                gameOver = true;
+            }
         }
     }
 
     public void playerMove(Cells player) {
-
         boolean playerMoved = false;
-        drawBoard();
-
         while(!(playerMoved)) {
-            boolean isNumber;
 
-            System.out.println(player+" pick a row: ");
+            System.out.print(player+" pick a row: ");
             Scanner rowIn = new Scanner(System.in);
             int row = rowIn.nextInt();
 
-            System.out.println(player+" pick a column: ");
+            System.out.print(player+" pick a column: ");
             Scanner columnIn = new Scanner(System.in);
             int column = columnIn.nextInt();
 
@@ -65,7 +74,18 @@ public class TicTacToe {
                 System.out.println("   (!) A player is already in that position try again.\n");
             }
         }
-        checkWin(player);
+    }
+
+    public boolean whichPlayer(int playerCheck) {
+        if ( (playerCheck % 2) == 0 ) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public boolean inputValidator() {
+        return true;
     }
 
     public boolean allMatch(Cells cell1, Cells cell2, Cells cell3) {
@@ -105,15 +125,13 @@ public class TicTacToe {
         return ((allMatch(board[0][0], board[1][1], board[2][2])) || (allMatch(board[0][2], board[1][1], board[2][0])));
     }
 
-    public void checkWin(Cells player) {
-        if(checkRow() || checkColumn() || checkDiagonal() || isBoardFull()){
-            gameOver = true;
-            System.out.println("\n~~~~ Congratulations! "+player+" WINS! ~~~~\n");
-        }
+    public boolean checkWin() {
+        return (checkRow() || checkColumn() || checkDiagonal() || isBoardFull());
     }
 
-
     public void drawBoard () {
+        System.out.print("\n... Player1 = "+player1+" & ");
+        System.out.println("Player2 = "+player2+" ... \n");
         System.out.println("Column 0  |  Column 1  |  Column 2");
         System.out.println("===============================\n");
         System.out.println("Row 0|  "+board[0][0]+" | "+board[0][1]+" | "+board[0][2]);
