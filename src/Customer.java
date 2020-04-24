@@ -1,18 +1,22 @@
 public class Customer {
 
-    //account
     private Card card;
+    private String name;
 
-    public Customer() {
-        card = new Card();
+    public Customer(String name, Card card) {
+        this.name = name;
+        this.card = card;
     }
 
     public static void main(String[] args) {
 
     }
 
-    public void setPin() {
-
+    public String getName() {
+        return name;
+    }
+    public void setName(String newName) {
+        name = newName;
     }
 
     public Card getCard() {

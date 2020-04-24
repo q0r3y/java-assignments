@@ -3,9 +3,9 @@ public class Card {
     private int cardNum;
     private int pin;
 
-    public Card() {
-        cardNum = 1001;
-        pin = 1234;
+    public Card(int cardNum, int pin) {
+        this.cardNum = cardNum;
+        this.pin = pin;
     }
 
     public static void main(String[] args) {
@@ -14,10 +14,6 @@ public class Card {
 
     public int getCardNum () {
         return cardNum;
-    }
-
-    public void setPin() {
-
     }
 
     public int getPin() {
