@@ -1,5 +1,13 @@
 import java.util.Scanner;
 import java.util.Date;
+/**
+ *
+ * Assignment 7 ATM
+ * Code for ATM class. Accepts customer, and bank objects
+ *
+ * @ q0r3y
+ * @ 04.27.20
+ */
 
 public class Atm {
 
@@ -9,25 +17,25 @@ public class Atm {
     private String machineLocation;
     private boolean authenticated;
 
-
+    // Constructor for ATM class
     public Atm(Customer customer, Bank bank) {
         machineLocation = "Andy's Corner Store";
         this.customer = customer;
         this.bank = bank;
         card = customer.getCard();
-        authenticate();
-        if(authenticated) {
+        if(authenticate()) {
             menu();
         } else {
             System.out.println("\nInvalid card. Please try again later.");
         }
     }
 
+    // Main method for ATM class, currently contains test parameters
     public static void main(String[] args) {
         new Atm((new Customer(("Howard B."),(new Card(1001, 1234)))), (new Bank()));
     }
 
-    // Checks input pin against correct card pin
+    // Authenticates card number and pin with bank system
     public boolean authenticate() {
         boolean correctPin = false;
         int attempt = 1;
@@ -66,10 +74,12 @@ public class Atm {
         return authenticated;
     }
 
+    // Locks the card
     public void lockCard(int cardNumber) {
         bank.lockCard(cardNumber);
     }
 
+    // withdraw method
     public void withdraw() {
         String transType = "Withdraw";
         System.out.println("--- WITHDRAW MENU ---");
@@ -90,22 +100,21 @@ public class Atm {
         } else {
             System.out.println("\nYou do not have enough funds available for the requested withdraw.\n");
         }
-
-        // get approval from bank
-        // remove money from account
     }
 
+    // deposit method
     public void deposit() {
         String transType = "Deposit";
         System.out.println("--- DEPOSIT MENU ---");
         int cardNumber = card.getCardNum();
-        System.out.println("Enter amount to deposit");
+        System.out.print("Enter amount to deposit: ");
         Scanner inputAmount = new Scanner(System.in);
         int amount = intChecker(inputAmount);
         bank.addMoney(cardNumber, amount);
         printReceipt(transType, amount);
     }
 
+    // menu method
     public void menu() {
         boolean cancel = false;
         while(!cancel) {
@@ -140,6 +149,7 @@ public class Atm {
         }
     }
 
+    // Prints a receipt with important information
     public void printReceipt(String transType, int amount) {
         Date today = new Date();
         System.out.println("Printing receipt...\n");
@@ -151,26 +161,27 @@ public class Atm {
         System.out.println("- Amount: "+amount);
         System.out.println("- Remaining balance: "+bank.getBalance(card.getCardNum()));
         System.out.println("---------------\n");
-
     }
 
+    // Gets the balance
     public int getBalance(int cardNumber) {
         return(bank.getBalance(cardNumber));
     }
 
-    // fix checker for strings
+    // Checks for positive integer input
     public int intChecker(Scanner input) {
         int number;
         do {
             while (!input.hasNextInt()) {
-                System.out.println("Input only accepts integers!");
+                System.out.print("Input only accepts positive integers! Please try again: ");
                 input.next();
             }
             number = input.nextInt();
+            if(number < 0){
+                System.out.print("Input only accepts positive integers! Please try again: ");
+            }
         } while (number < 0);
         return number;
     }
-
-
 }
 
