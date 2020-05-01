@@ -1,0 +1,19 @@
+roomNumber,name,roomDescription,occupiedChance,itemChance,ifOccupied,numOfDoors,lowRoom,highRoom
+0,Main Hall,There are 3 large wooden doors in the hallway. Emblazoned on each door is the corresponding hallway number.,0,0,There are some students racing down the hall with wands in hand.,3,0,3
+1,Gryffindor Hall,The red and gold aesthetic of this wing gives off a noble vibe. ,25,0,An old women is in the hall admiring at a statue. ,5,4,8
+2,Ravenclaw Hall,Blue and silver banners and decorations hang on the walls. ,25,0,Theres a short pale girl walking briskly down the hallway. ,4,9,12
+3,Slytherin Hall,The dark green theme with snakes on the walls give you the creeps.,25,0,Theres a tall man with dark hair leaned against the wall staring at you.,5,13,17
+4,Room 4,This room is shaped like a circle with a large window overlooking the valley.,49,20,A boy in the corner is staring out the window.,0,1,1
+5,Room 5,This is Ron Weasleys room. The floor is littered with random objects. What a mess.,100,78,Ron is in the room talking with some other students.,0,1,1
+6,Room 6,Wow. A strangely clean room. Not a speck of dust in sight.,0,9,You get the feeling someone is watching you.,0,1,1
+7,Room 7,This is the smallest room you have ever seen. ,86,86,A large man barely able to fit through the doorway is resting in bed.,0,1,1
+8,Room 8,This spacious bedroom has mismatched wooden furniture.,16,3,It appears someone has turned themselves into a nightstand. ,0,1,1
+9,Room 9,The room is decorated with birds of all shapes and sizes. ,25,25,An owl turns its head to keep and eye on you.,0,2,2
+10,Room 10,You can tell the person who stays in this room is obviously male.,39,39,A group of friends are playfully dueling.,0,2,2
+11,Room 11,Something about this room makes your skin crawl.,91,8,There’s a man whispering to himself staring at the wall.,0,2,2
+12,Room 12,The room has sludge dripping from the ceiling.,9,9,You hear faint giggling coming from the closet.,0,2,2
+13,Room 13,In the corner of the room a bubbling cauldron of mystic sludge is giving off a vile stench. ,69,69,A scruffy looking man is passed out on the floor.,0,3,3
+14,Room 14,Red candles are perched on every shelf. Some still burning. Some have melted into a puddle of wax dripping down to the floor.,48,65,A pale women wearing a black cloak glares at you. ,0,3,3
+15,Room 15,The room is dimly lit with a high ceiling.,99,99,A women is sitting at the fireplace reading a book.,0,3,3
+16,Room 16,Huh. This room is mysteriously empty. Something in your stomach tells you that you should probably leave.,10,0,You sense a presence in the room.,0,3,3
+17,Room 17,You can tell the person who stays in this room is obviously female.,5,100,A group of friends are gossiping around a card table.,0,3,3
