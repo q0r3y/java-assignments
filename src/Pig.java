@@ -1,17 +1,13 @@
-import java.io.FileOutputStream;
-import java.lang.reflect.Array;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Scanner;
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
 
 /**
  * Assignment9 Pig Class
  * Creates a Pig object
  *
  * @ q0r3y
- * @ 05.06.20
+ * @ 05.08.20
  */
 
 public class Pig
@@ -20,32 +16,38 @@ public class Pig
     private ArrayList<Player> players;
     private boolean gameOver;
     private boolean gameLoaded;
+    private File gameSave;
 
     /**
      * Constructor for objects of Pig class
      */
 
     public Pig(int numOfPlayers) {
-        loadGame();
+        gameSave = new File("pigSave");
+        this.players = new ArrayList<>();
+        this.die = new Die();
+        this.gameOver = false;
+        // Load previous game if one exists
+        try {
+            loadGame();
+        } catch (FileNotFoundException e) {
+            System.out.println(":: Game save not found ::");
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
         if(!gameLoaded) {
-            this.die = new Die();
-            this.players = new ArrayList<>();
-            System.out.println("Number of players chosen: " + numOfPlayers);
-            for (int i = 1; i <= numOfPlayers; i++) {
-                System.out.print("Player " + i + " enter name: ");
-                Scanner input = new Scanner(System.in);
-                String name = input.nextLine();
-                players.add(new Player(name));
-            }
-            this.gameOver = false;
+            newGame(numOfPlayers);
         }
         playGame();
+        saveGame();
     }
 
+    // Pig main method
     public static void main(String[] args) {
         new Pig(2);
     }
 
+    // Main game play loop
     public void playGame(){
         while(!gameOver) {
             for (Player player : players) {
@@ -64,7 +66,6 @@ public class Pig
                         boolean chosen = false;
                         while (!chosen) {
                             System.out.println("  Would you like to roll again?");
-                            // get input if else
                             String choice = input.nextLine();
                             if (choice.equals("yes")) {
                                 roll = rollDie();
@@ -87,25 +88,65 @@ public class Pig
                 // Check for win
                 if(player.getPoints() >= 100) {
                     System.out.println(player.getName() + " has won the game!");
+                    player.setWins(player.getWins()+1);
                     gameOver = true;
                     break;
                 }
             }
         }
+        resetPoints();
     }
 
-    public void loadGame() {
-
-        gameLoaded = false;
+    // Creates new game if no games were loaded
+    public void newGame(int numOfPlayers) {
+        System.out.println("Number of players chosen: " + numOfPlayers);
+        for (int i = 1; i <= numOfPlayers; i++) {
+            players.add(new Player("Player"+i));
+        }
     }
 
+    // Resets player game points when game is over
+    public void resetPoints () {
+        for(Player player : players) {
+            player.setPoints(0);
+        }
+    }
+
+    // Loads game from storage
+    public void loadGame() throws FileNotFoundException, IOException, ClassNotFoundException {
+        FileInputStream inputFile = new FileInputStream(gameSave);
+        ObjectInputStream input = new ObjectInputStream(inputFile);
+        System.out.println(":: Game save found ::");
+        try {
+            while (true) {
+                Player player = (Player)input.readObject();
+                System.out.println("  "+player.getName()+" wins: "+player.getWins());
+                players.add(player);
+            }
+        } catch (EOFException ex) {
+        }
+        gameLoaded = true;
+    }
+
+    // Saves game to storage
     public void saveGame() {
-
-
+        try {
+            FileOutputStream saveGame = new FileOutputStream(gameSave);
+            ObjectOutputStream output = new ObjectOutputStream(saveGame);
+            for (Player player : players) {
+                output.writeObject(player);
+            }
+            output.close();
+            saveGame.close();
+        } catch (FileNotFoundException e) {
+            System.out.println("File not found.");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
+    // Rolls die
     public int rollDie() {
         return die.roll();
     }
-
 }

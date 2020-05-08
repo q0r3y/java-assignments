@@ -4,7 +4,7 @@ import java.util.Random;
  * Creates a Die object
  *
  * @ q0r3y
- * @ 05.06.20
+ * @ 05.08.20
  */
 
 public class Die
@@ -20,14 +20,17 @@ public class Die
         this.dieSides = 6;
     }
 
+    // Returns number of die sides
     public int getDieSides() {
         return dieSides;
     }
 
+    // Sets number of die sides
     public void setDieSides(int dieSides) {
         this.dieSides = dieSides;
     }
 
+    // Returns random int (rolls die)
     public int roll() {
         return (rand.nextInt(dieSides) +1);
     }
